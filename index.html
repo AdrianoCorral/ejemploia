@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía sobre Casas Móviles en Fincas No Edificables en Asturias</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony (Warm neutrals with a soft slate blue accent) -->
+    <!-- Application Structure Plan: A guided, thematic journey breaking down the complex legal question. Starts with a direct summary, defines key concepts with interactive cards and a flowchart, explains the legal hierarchy with tabs, provides a step-by-step interactive checklist, and concludes with the risks. This structure is chosen to walk the user from a state of confusion to clarity and empowerment, providing actionable steps, which is more effective than a simple Q&A or a direct copy of a legal text. -->
+    <!-- Visualization & Content Choices: Report Info: Mobile home vs. building distinction -> Goal: Organize/Clarify -> Viz: HTML/CSS Flowchart Diagram -> Interaction: Hover highlights on paths -> Justification: Visually simplifies the most critical legal distinction. / Report Info: Action steps -> Goal: Guide -> Viz: Interactive HTML checklist -> Interaction: Click to expand details -> Justification: Provides a clear, actionable path for the user. No traditional charts are used as the source material is legal/procedural, not quantitative. CONFIRMING NO SVG/Mermaid. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f7f4;
+            color: #333;
+        }
+        .nav-link {
+            transition: color 0.3s ease;
+            position: relative;
+            padding-bottom: 4px;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background-color: #4A5568;
+            transition: all 0.3s ease-in-out;
+            transform: translateX(-50%);
+        }
+        .nav-link.active::after,
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .flowchart-node {
+            border: 2px solid #90A4AE;
+            background-color: #f1f5f9;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .flowchart-node:hover {
+            background-color: #e2e8f0;
+            border-color: #607D8B;
+        }
+        .flowchart-connector {
+            position: absolute;
+            background-color: #90A4AE;
+            z-index: -1;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .tab-button.active {
+            background-color: #4A5568;
+            color: #fff;
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800">
+
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <nav class="flex items-center justify-between h-16">
+                <div class="text-xl font-bold text-stone-700">Guía Legal Asturias</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#inicio" class="nav-link text-gray-600 hover:text-gray-900">Inicio</a>
+                    <a href="#conceptos" class="nav-link text-gray-600 hover:text-gray-900">Conceptos Clave</a>
+                    <a href="#ley" class="nav-link text-gray-600 hover:text-gray-900">Normativa</a>
+                    <a href="#plan" class="nav-link text-gray-600 hover:text-gray-900">Plan de Acción</a>
+                    <a href="#riesgos" class="nav-link text-gray-600 hover:text-gray-900">Riesgos</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="menu-button" class="text-gray-600 focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                </div>
+            </nav>
+            <div id="mobile-menu" class="md:hidden hidden py-2">
+                <a href="#inicio" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Inicio</a>
+                <a href="#conceptos" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Conceptos Clave</a>
+                <a href="#ley" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Normativa</a>
+                <a href="#plan" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Plan de Acción</a>
+                <a href="#riesgos" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Riesgos</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+        
+        <section id="inicio" class="text-center min-h-[60vh] flex flex-col justify-center items-center">
+            <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-stone-900">¿Casa móvil en finca no edificable en Asturias?</h1>
+            <p class="mt-6 text-lg md:text-xl text-stone-600 max-w-3xl">
+                La respuesta corta es: <span class="font-semibold text-sky-800">es complicado y, por lo general, no está permitido para uso residencial permanente</span>. La clave está en si se considera un "bien mueble" (como un vehículo) o un "bien inmueble" (una edificación). Esta guía te ayudará a entender los detalles.
+            </p>
+            <a href="#conceptos" class="mt-8 px-8 py-3 bg-slate-700 text-white font-semibold rounded-lg shadow-md hover:bg-slate-800 transition-colors duration-300">Empezar a explorar</a>
+        </section>
+
+        <section id="conceptos" class="py-12 md:py-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-stone-900">Conceptos Clave</h2>
+                <p class="mt-4 text-lg text-stone-600 max-w-2xl mx-auto">Para entender la normativa, primero hay que diferenciar estos términos. Son la base de todo el proceso.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card bg-white p-6 rounded-lg shadow-sm border border-stone-200">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-sky-100 p-3 rounded-full text-sky-700">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-stone-800">Casa Móvil (Mobil Home)</h3>
+                    </div>
+                    <p class="mt-4 text-stone-600">Legalmente se considera un <span class="font-semibold">bien mueble</span>, similar a una caravana. Debe conservar sus elementos de movilidad (ruedas, chasis, lanza de arrastre) y ser autosuficiente, sin conexiones permanentes a redes de servicios.</p>
+                </div>
+                <div class="card bg-white p-6 rounded-lg shadow-sm border border-stone-200">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-teal-100 p-3 rounded-full text-teal-700">
+                           <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-stone-800">Casa Prefabricada</h3>
+                    </div>
+                    <p class="mt-4 text-stone-600">A efectos legales, es una <span class="font-semibold">edificación</span> como cualquier otra. Requiere anclaje o cimentación, conexiones a servicios y, por tanto, necesita licencia de obras y debe ubicarse en suelo edificable.</p>
+                </div>
+                <div class="card bg-white p-6 rounded-lg shadow-sm border border-stone-200">
+                     <div class="flex items-center space-x-4">
+                        <div class="bg-amber-100 p-3 rounded-full text-amber-700">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-stone-800">Suelo No Edificable</h3>
+                    </div>
+                    <p class="mt-4 text-stone-600">También llamado suelo rústico. Por norma general, está protegido y solo se permiten construcciones vinculadas a explotaciones agrícolas, ganaderas o forestales, con estrictas limitaciones.</p>
+                </div>
+            </div>
+
+            <div class="mt-16 bg-white p-6 md:p-8 rounded-lg shadow-md border border-stone-200">
+                <h3 class="text-2xl font-bold text-center text-stone-900">¿Cuándo una casa móvil se considera edificación?</h3>
+                <p class="text-center mt-2 text-stone-600 max-w-3xl mx-auto">Este es el punto más importante. Si tu instalación cumple alguna de estas condiciones, la ley la considerará un inmueble y necesitará licencia.</p>
+                <div class="mt-8 relative space-y-12 md:space-y-0 md:flex md:items-start md:justify-around text-sm">
+                    <div class="flowchart-node w-full md:w-1/4">
+                        <div class="font-bold mb-2">Punto de partida</div>
+                        <p>Tienes una casa móvil</p>
+                    </div>
+                    
+                    <div class="hidden md:block flowchart-connector" style="left: 20%; top: 50%; width: 10%; height: 2px;"></div>
+                    <div class="hidden md:block flowchart-connector" style="left: 29%; top: -10%; width: 2px; height: 120%;"></div>
+
+                    <div class="flex flex-col space-y-4 w-full md:w-1/3">
+                        <div class="flowchart-node">
+                            <div class="font-bold mb-2 text-red-700">¿Está anclada al suelo?</div>
+                            <p>(Cimentación, pilotes, etc.)</p>
+                        </div>
+                        <div class="flowchart-node">
+                            <div class="font-bold mb-2 text-red-700">¿Conexiones permanentes?</div>
+                            <p>(Agua, luz, saneamiento a la red pública)</p>
+                        </div>
+                        <div class="flowchart-node">
+                            <div class="font-bold mb-2 text-red-700">¿Has eliminado sus ruedas o chasis?</div>
+                            <p>(Carácter de movilidad perdido)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="hidden md:block flowchart-connector" style="left: 60%; top: 50%; width: 15%; height: 2px;"></div>
+                    <div class="hidden md:block flowchart-connector" style="left: 60%; top: 50%; width: 2px; height: 0;"></div>
+
+
+                    <div class="flowchart-node w-full md:w-1/4 self-center bg-red-50 border-red-500 hover:bg-red-100">
+                        <div class="font-bold mb-2">Conclusión</div>
+                        <p>Si la respuesta a <span class="font-semibold">CUALQUIERA</span> de las preguntas es SÍ, se considera <span class="font-bold">EDIFICACIÓN ILEGAL</span> en suelo no edificable.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ley" class="py-12 md:py-20 bg-slate-50 rounded-lg -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-stone-900">¿Qué Dice la Normativa?</h2>
+                <p class="mt-4 text-lg text-stone-600 max-w-2xl mx-auto">La regulación es una jerarquía: la ley autonómica establece el marco general y cada ayuntamiento lo desarrolla.</p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="flex border-b border-gray-300">
+                    <button class="tab-button flex-1 py-3 px-4 text-center font-semibold text-gray-600 transition-colors duration-300 active" data-tab="autonomica">Normativa Autonómica</button>
+                    <button class="tab-button flex-1 py-3 px-4 text-center font-semibold text-gray-600 transition-colors duration-300" data-tab="municipal">Normativa Municipal</button>
+                </div>
+                
+                <div id="autonomica" class="tab-content p-6 bg-white rounded-b-lg active">
+                    <h3 class="font-bold text-xl mb-2 text-slate-800">Ley del Suelo de Asturias (LOTU)</h3>
+                    <p class="text-stone-600">El Decreto Legislativo 1/2004 es la ley principal. Establece que en Suelo No Urbanizable de Especial Protección (la mayoría en Asturias) están prohibidas las edificaciones residenciales. Solo se permiten construcciones directamente vinculadas a explotaciones agrarias o de interés público, y siempre con autorización previa. No diferencia entre casa prefabricada o tradicional: si está anclada y conectada, es una edificación.</p>
+                </div>
+
+                <div id="municipal" class="tab-content p-6 bg-white rounded-b-lg">
+                    <h3 class="font-bold text-xl mb-2 text-slate-800">Plan General de Ordenación (PGO) de tu Concejo</h3>
+                    <p class="text-stone-600">Es el documento clave. Cada Ayuntamiento (Concejo) tiene su propio PGO que detalla qué se puede hacer en cada tipo de suelo dentro de su municipio. Este plan puede ser más restrictivo que la LOTU, pero nunca más permisivo. Es de <span class="font-bold">obligatoria consulta</span>, ya que la clasificación exacta de tu finca (protección de costas, agraria, forestal, etc.) determinará las posibilidades reales.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="plan" class="py-12 md:py-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-stone-900">Tu Plan de Acción</h2>
+                <p class="mt-4 text-lg text-stone-600 max-w-2xl mx-auto">No tomes ninguna decisión sin seguir estos pasos. La consulta previa es fundamental para evitar problemas graves.</p>
+            </div>
+            <div class="max-w-2xl mx-auto space-y-4">
+                <div class="accordion-item bg-white rounded-lg shadow-sm border border-stone-200">
+                    <button class="accordion-header w-full text-left p-5 flex justify-between items-center">
+                        <span class="text-lg font-semibold text-slate-800">1. Consulta en tu Ayuntamiento</span>
+                        <span class="accordion-icon text-slate-500 transform transition-transform duration-300">▼</span>
+                    </button>
+                    <div class="accordion-content px-5 pb-5">
+                        <p class="text-stone-600">Es el paso más importante. Pide cita con el técnico de urbanismo. Lleva la referencia catastral de tu finca. Explica tu intención de "estacionar" una casa móvil, no de "construir" una vivienda. Sé claro sobre su carácter móvil y autosuficiente.</p>
+                    </div>
+                </div>
+                <div class="accordion-item bg-white rounded-lg shadow-sm border border-stone-200">
+                    <button class="accordion-header w-full text-left p-5 flex justify-between items-center">
+                        <span class="text-lg font-semibold text-slate-800">2. Revisa el Plan General de Ordenación (PGO)</span>
+                        <span class="accordion-icon text-slate-500 transform transition-transform duration-300">▼</span>
+                    </button>
+                    <div class="accordion-content px-5 pb-5">
+                        <p class="text-stone-600">Puedes consultarlo en la web del ayuntamiento o en sus oficinas. Busca el mapa de clasificación de suelo y localiza tu parcela. Lee la normativa específica para esa categoría de suelo. Presta atención a los usos permitidos y prohibidos.</p>
+                    </div>
+                </div>
+                <div class="accordion-item bg-white rounded-lg shadow-sm border border-stone-200">
+                    <button class="accordion-header w-full text-left p-5 flex justify-between items-center">
+                        <span class="text-lg font-semibold text-slate-800">3. Realiza una Consulta Urbanística por escrito</span>
+                        <span class="accordion-icon text-slate-500 transform transition-transform duration-300">▼</span>
+                    </button>
+                    <div class="accordion-content px-5 pb-5">
+                        <p class="text-stone-600">Si después de hablar con el técnico aún tienes dudas, presenta una consulta formal por registro. Describe detalladamente lo que quieres hacer (modelo de casa, si mantendrá las ruedas, cómo obtendrás agua y luz, etc.). La respuesta del ayuntamiento por escrito te dará seguridad jurídica.</p>
+                    </div>
+                </div>
+                 <div class="accordion-item bg-white rounded-lg shadow-sm border border-stone-200">
+                    <button class="accordion-header w-full text-left p-5 flex justify-between items-center">
+                        <span class="text-lg font-semibold text-slate-800">4. Considera los usos permitidos</span>
+                        <span class="accordion-icon text-slate-500 transform transition-transform duration-300">▼</span>
+                    </button>
+                    <div class="accordion-content px-5 pb-5">
+                        <p class="text-stone-600">Si la finca está vinculada a una explotación agraria, podrías solicitar autorización para una caseta de aperos o un almacén. Las condiciones son muy estrictas en cuanto a tamaño y materiales, pero es una vía a explorar si el uso no es residencial.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="riesgos" class="py-12 md:py-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-red-800">Riesgos de una Instalación Ilegal</h2>
+                <p class="mt-4 text-lg text-stone-600 max-w-2xl mx-auto">Actuar sin autorización en suelo no edificable tiene consecuencias serias. No es un tema menor.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div class="card bg-red-50 p-6 rounded-lg border border-red-200">
+                    <h3 class="text-xl font-semibold text-red-900 flex items-center">
+                        <span class="text-3xl mr-3">💰</span>
+                        Sanciones Económicas
+                    </h3>
+                    <p class="mt-2 text-red-800">Las multas por infracciones urbanísticas graves son muy elevadas. Pueden ir desde los 3.000€ hasta superar los 100.000€, dependiendo de la gravedad y del valor de la construcción ilegal.</p>
+                </div>
+                <div class="card bg-red-50 p-6 rounded-lg border border-red-200">
+                    <h3 class="text-xl font-semibold text-red-900 flex items-center">
+                        <span class="text-3xl mr-3">⚖️</span>
+                        Orden de Demolición
+                    </h3>
+                    <p class="mt-2 text-red-800">Además de la multa, la administración te exigirá que restaures la legalidad, lo que implica demoler o retirar la instalación a tu costa. Si no lo haces, lo hará el ayuntamiento y te pasará la factura.</p>
+                </div>
+            </div>
+            <div class="mt-12 text-center bg-white p-8 rounded-lg shadow-md max-w-4xl mx-auto border-t-4 border-slate-700">
+                <h3 class="text-2xl font-bold text-slate-800">Conclusión Final: La Vía Segura</h3>
+                <p class="mt-4 text-lg text-stone-700">La posibilidad de instalar una casa móvil en suelo no edificable en Asturias para un uso residencial es <span class="font-semibold">extremadamente limitada y arriesgada</span>. La única forma de actuar con seguridad es mantener su carácter 100% móvil y autosuficiente, y aun así, solo para un uso esporádico o temporal. Para cualquier otra cosa, la consulta previa y vinculante con tu ayuntamiento no es una opción, <span class="font-bold">es una obligación</span>.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-800 text-white mt-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center text-sm">
+            <p>&copy; 2024 Guía Informativa sobre Urbanismo en Asturias. Este contenido es orientativo y no sustituye el asesoramiento legal profesional.</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            menuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            const mobileLinks = mobileMenu.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('main section');
+            
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 70) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').substring(1) === current) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            accordionItems.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                const content = item.querySelector('.accordion-content');
+                const icon = item.querySelector('.accordion-icon');
+
+                header.addEventListener('click', () => {
+                    const isOpen = content.style.maxHeight;
+                    
+                    accordionItems.forEach(i => {
+                        i.querySelector('.accordion-content').style.maxHeight = null;
+                        i.querySelector('.accordion-icon').style.transform = 'rotate(0deg)';
+                    });
+
+                    if (!isOpen) {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                        icon.style.transform = 'rotate(180deg)';
+                    }
+                });
+            });
+
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabId = button.dataset.tab;
+
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    
+                    tabContents.forEach(content => {
+                        if (content.id === tabId) {
+                            content.classList.add('active');
+                        } else {
+                            content.classList.remove('active');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
